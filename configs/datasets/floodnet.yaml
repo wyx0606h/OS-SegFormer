@@ -1,0 +1,46 @@
+name: FloodNet
+root_resolver: floodnet
+class_names:
+  - Background
+  - Building-flooded
+  - Building-non-flooded
+  - Road-flooded
+  - Road-non-flooded
+  - Water
+  - Tree
+  - Vehicle
+  - Pool
+  - Grass
+ignore_index: 255
+allowed_protocols: [sup398]
+canonical_crop_size: 512
+
+# State-channel order matches the frozen OS-SegFormer checkpoint convention.
+factorization:
+  object_class_names: [background, building, road, water, tree, vehicle, pool, grass]
+  semantic_to_object: [0, 1, 1, 2, 2, 3, 4, 5, 6, 7]
+  state_groups:
+    - name: building
+      object_class_id: 1
+      semantic_class_ids: [2, 1]
+      state_names: [non_flooded, flooded]
+    - name: road
+      object_class_id: 2
+      semantic_class_ids: [4, 3]
+      state_names: [non_flooded, flooded]
+
+metrics:
+  primary_metric: miou10
+  mean_iou_aliases: [miou10]
+  excluded_class_ids: [0]
+  excluded_mean_iou_aliases: [miou9]
+  class_mean_groups:
+    affected_miou: [1, 3]
+    flooded_miou: [1, 3]
+  binary_iou_groups:
+    building_iou: [1, 2]
+    road_iou: [3, 4]
+  state:
+    positive_name: flooded
+    positive_class_ids: [1, 3]
+    negative_class_ids: [2, 4]

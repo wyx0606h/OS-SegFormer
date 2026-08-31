@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+*.local
+
+# Training and evaluation artifacts
+/runs/
+/outputs/
+/checkpoints/
+/predictions/
+/logs/
+/wandb/
+/tensorboard/
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.safetensors
+
+# Datasets and caches
+/data/
+/datasets/
+/weights/
+/cache/
+/.cache/
+huggingface/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.log
+*.bak
+*.swp

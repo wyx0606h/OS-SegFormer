@@ -1,0 +1,42 @@
+name: RescueNet
+root_resolver: direct
+class_names:
+  - Background
+  - Water
+  - Building-No-Damage
+  - Building-Minor-Damage
+  - Building-Major-Damage
+  - Building-Total-Destruction
+  - Vehicle
+  - Road-Clear
+  - Road-Blocked
+  - Tree
+  - Pool
+ignore_index: 255
+allowed_protocols: [official_train]
+canonical_crop_size: 512
+
+factorization:
+  object_class_names: [background, building, road, water, vehicle, tree, pool]
+  semantic_to_object: [0, 3, 1, 1, 1, 1, 4, 2, 2, 5, 6]
+  state_groups:
+    - name: building
+      object_class_id: 1
+      semantic_class_ids: [2, 3, 4, 5]
+      state_names: [no_damage, minor_damage, major_damage, total_destruction]
+    - name: road
+      object_class_id: 2
+      semantic_class_ids: [7, 8]
+      state_names: [clear, blocked]
+
+metrics:
+  primary_metric: miou11
+  mean_iou_aliases: [miou11]
+  excluded_class_ids: [0]
+  excluded_mean_iou_aliases: [miou10]
+  class_mean_groups:
+    affected_miou: [3, 4, 5, 8]
+  binary_iou_groups:
+    building_iou: [2, 3, 4, 5]
+    road_iou: [7, 8]
+  state: null

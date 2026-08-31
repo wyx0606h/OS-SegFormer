@@ -1,0 +1,82 @@
+experiment:
+  name: rescuenet_os_segformer
+  run_id: rescuenet_os_segformer_s20260702
+  output_dir: runs/rescuenet_os_segformer
+  seed: 20260702
+  kind: supervised
+
+dataset:
+  profile: ../datasets/rescuenet.yaml
+  protocol: official_train
+
+data:
+  data_root: .
+  manifest: splits/rescuenet/official.csv
+  train_split: train
+  validation_split: validation
+  test_split: test
+  crop_size: 512
+  num_workers: 4
+  drop_last: true
+  image_mean: [0.485, 0.456, 0.406]
+  image_std: [0.229, 0.224, 0.225]
+  scale_range: [0.75, 1.25]
+  class_aware_ids: [3, 4, 5, 8]
+  class_aware_probability: 0.0
+  center_crop_eval: false
+
+model:
+  name: segformer_b0
+  num_labels: 11
+  pretrained: true
+  pretrained_model_name_or_path: nvidia/mit-b0
+  local_files_only: false
+  auxiliary_heads: [object, state]
+  state_factorization:
+    enabled: true
+    feature_source: encoder_multiscale
+    decoder_channels: 64
+    dropout: 0.1
+    state_mode: conditional
+    detach_object_posterior: false
+    conditioning_operator: additive
+    fusion_weight: 0.25
+    fusion_scope: grouped_state
+
+loss:
+  name: ce_dice
+  ce_weight: 1.0
+  dice_weight: 1.0
+  semantic_source: semantic_direct
+
+modules:
+  state_factorization:
+    enabled: true
+    object_weight: 0.25
+    state_weight: 0.25
+    object_dice_weight: 1.0
+    state_dice_weight: 1.0
+
+training:
+  max_iterations: 40000
+  val_interval: 2000
+  checkpoint_iterations: [12000, 22000]
+  batch_size: 2
+  gradient_accumulation_steps: 4
+  optimizer: adamw
+  learning_rate: 0.00006
+  weight_decay: 0.01
+  scheduler: poly
+  warmup_iterations: 1000
+  poly_power: 1.0
+  gradient_clip_norm: 1.0
+  use_amp: true
+  device: cuda
+
+evaluation:
+  tile_size: 512
+  stride: 384
+  tile_batch_size: 4
+  boundary_tolerance: 3
+  selection_metric: miou11
+  prediction_source: fused

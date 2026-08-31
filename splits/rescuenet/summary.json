@@ -1,0 +1,16 @@
+{
+  "dataset": "RescueNet",
+  "splits": {
+    "train": {
+      "samples": 3595
+    },
+    "validation": {
+      "samples": 449
+    },
+    "test": {
+      "samples": 450
+    }
+  },
+  "total_samples": 4494,
+  "canonical_rows_sha256": "32b55953184a87c9b84bcea80407b1e078a10a95a0ebebb37f9827f6da0af5a0"
+}
