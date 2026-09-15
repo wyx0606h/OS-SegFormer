@@ -55,6 +55,14 @@ minimal because the appropriate PyTorch/CUDA build is machine-specific.
 The `numpy<2` guard preserves compatibility with that PyTorch generation.
 SegFormer-B0 initialization uses `nvidia/mit-b0` from Hugging Face.
 
+## Tests
+
+Run the lightweight configuration, factorization, and model-forward tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
 ## Dataset Preparation
 
 Datasets, model weights, and generated predictions are not distributed in this
@@ -194,25 +202,11 @@ after publication, but weights are not required to use or inspect the code.
 
 ## Citation
 
-TODO: replace this placeholder after the ICASSP/arXiv bibliographic metadata
-is final.
-
-```bibtex
-@inproceedings{os_segformer_todo,
-  title     = {Object-State Factorization for Post-Flood Aerial Semantic Segmentation},
-  author    = {TODO},
-  booktitle = {TODO},
-  year      = {TODO}
-}
-```
+If you use this code, please cite the accompanying paper. Final BibTeX metadata
+will be added upon publication.
 
 ## Acknowledgements
 
 This implementation builds on SegFormer and the Hugging Face Transformers
 implementation of `nvidia/mit-b0`. We thank the authors and maintainers of
 FloodNet and RescueNet for making the datasets available.
-
-## Release TODOs
-
-- Add the final paper/arXiv link and citation metadata.
-- Choose and add the repository license.
