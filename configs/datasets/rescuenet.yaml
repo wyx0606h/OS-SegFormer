@@ -35,6 +35,7 @@ metrics:
   excluded_class_ids: [0]
   excluded_mean_iou_aliases: [miou10]
   class_mean_groups:
+    state_miou: [2, 3, 4, 5, 7, 8]
     affected_miou: [3, 4, 5, 8]
   binary_iou_groups:
     building_iou: [2, 3, 4, 5]

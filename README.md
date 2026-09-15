@@ -10,9 +10,9 @@ OS-SegFormer preserves a flat semantic prediction path while factorizing
 stateful semantic categories into object identity and object-conditioned state
 prediction, followed by group-mass-preserving posterior fusion.
 
-This submission-stage release is centered on the FloodNet experiments. Minimal
-RescueNet support is retained only for the paper's secondary cross-dataset
-applicability evaluation.
+This submission-stage release is centered on the FloodNet experiments.
+RescueNet support is included for the paper's secondary evaluation on a
+different object-state taxonomy.
 
 ## Overview
 
@@ -90,7 +90,7 @@ FloodNet-Supervised_v1.0/
 subset and the official 450/448 validation/test splits. It contains only sample
 identifiers and relative paths.
 
-### RescueNet (optional cross-dataset evaluation)
+### RescueNet (optional taxonomy adaptation)
 
 Prepare the official RescueNet layout:
 
@@ -124,7 +124,7 @@ python train.py \
   --data-root /path/to/FloodNet-Supervised_v1.0
 ```
 
-Optional RescueNet cross-dataset evaluation:
+Optional RescueNet evaluation:
 
 ```bash
 python train.py \
@@ -150,7 +150,7 @@ python train.py \
 External baselines follow their respective public implementations and native
 configurations; their third-party source trees are intentionally not vendored.
 
-For the paper's matched cross-dataset control, a RescueNet flat configuration
+For the corresponding flat SegFormer-B0 comparison, a RescueNet configuration
 is also available:
 
 ```bash
@@ -187,11 +187,16 @@ Checkpoints were selected on validation; test was used only for final reporting.
 | SegFormer-B0 | 18,000 | 49.8815 | 47.6675 |
 | OS-SegFormer | 30,000 | 61.7060 | 57.4958 |
 
-### RescueNet cross-dataset applicability (official training split)
+### RescueNet applicability (official training split)
 
-The RescueNet adaptation, matched baseline configuration, official split
-manifest, and reproduction commands are included as a secondary adaptation.
-Quantitative RescueNet results are not reported in this release.
+The RescueNet adaptation, flat SegFormer-B0 baseline configuration, official
+split manifest, and reproduction commands are included to evaluate a different
+object-state taxonomy with four building-damage states and two road states.
+
+| Method | State mIoU | Building macro-F1 | Road macro-F1 |
+|---|---:|---:|---:|
+| SegFormer-B0 | 44.92 | 69.52 | 62.32 |
+| OS-SegFormer | 45.36 | 70.80 | 62.80 |
 
 ## Checkpoints
 
